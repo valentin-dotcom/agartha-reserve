@@ -225,3 +225,148 @@ footer {
     margin-bottom: 30px;
   }
 }
+/* =========================================================
+   LOGIN PANEL
+========================================================= */
+
+.login-panel {
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(214, 194, 153, 0.18);
+}
+
+.login-panel h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.login-panel .intro {
+  margin-bottom: 26px;
+}
+
+
+/* =========================================================
+   RESERVATION PANEL
+========================================================= */
+
+.reservation-panel {
+  width: 100%;
+  margin-top: 36px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(214, 194, 153, 0.18);
+}
+
+.reservation-panel h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.reservation-panel .intro {
+  margin-bottom: 28px;
+}
+
+#crypto-select {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #4a443b;
+  border-radius: 5px;
+  outline: none;
+  background: #0e0d0b;
+  color: #f2eee6;
+  font-size: 0.98rem;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+#crypto-select:focus {
+  border-color: #a9966e;
+  background: #12110f;
+  box-shadow: 0 0 0 3px rgba(169, 150, 110, 0.12);
+}
+
+.payment-details {
+  margin-top: 30px;
+  padding: 24px;
+  border: 1px solid rgba(214, 194, 153, 0.20);
+  border-radius: 6px;
+  background: rgba(8, 8, 7, 0.65);
+  text-align: center;
+}
+
+.payment-details h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+}
+
+.payment-details p {
+  margin: 8px 0;
+}
+
+.qr-container {
+  width: min(280px, 100%);
+  margin: 24px auto;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.qr-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#payment-address {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  overflow-wrap: anywhere;
+  border: 1px solid #4a443b;
+  border-radius: 5px;
+  background: #090908;
+  color: #ddd5c8;
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.payment-warning {
+  margin-top: 20px !important;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 680px) {
+
+  .login-panel {
+    margin-top: 28px;
+    padding-top: 26px;
+  }
+
+  .reservation-panel {
+    margin-top: 28px;
+    padding-top: 26px;
+  }
+
+  .payment-details {
+    padding: 18px;
+  }
+
+}
