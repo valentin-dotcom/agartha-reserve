@@ -23,9 +23,30 @@
   <main class="page">
 
     <section class="hero">
-      <div class="brand">AGARTHA</div>
+      <div class="top-bar">
+        <div class="brand">AGARTHA</div>
 
-      <h1>RESERVE MY SPOT</h1>
+        <label class="language-selector">
+         <span id="language-label">Language</span>
+
+         <select id="language-select" aria-label="Language">
+         <option value="auto">Auto</option>
+         <option value="en">English</option>
+         <option value="es">Español</option>
+         <option value="pt">Português</option>
+         <option value="fr">Français</option>
+         <option value="de">Deutsch</option>
+         <option value="it">Italiano</option>
+         <option value="zh">中文</option>
+         <option value="ja">日本語</option>
+         <option value="ko">한국어</option>
+         <option value="ar">العربية</option>
+         <option value="ru">Русский</option>
+       </select>
+     </label>
+   </div>
+
+   <h1>RESERVE MY SPOT</h1>
 
       <p class="subtitle">
         Create your Agartha account and begin your journey
@@ -156,6 +177,116 @@
         ></p>
 
       </form>
+
+      <section
+        id="reservation-panel"
+        class="reservation-panel"
+        hidden
+      >
+
+        <h2 id="reservation-title">
+          Complete Your Reservation
+        </h2>
+
+        <p
+          id="reservation-intro"
+          class="intro"
+        >
+          Select the cryptocurrency and network you want to use for your reservation.
+        </p>
+
+        <div class="field full">
+
+          <label for="crypto-select">
+            Cryptocurrency / Network
+          </label>
+
+          <select id="crypto-select">
+
+            <option value="">
+              Select a payment method
+            </option>
+
+            <option value="eth-ethereum">
+              ETH — Ethereum Mainnet
+            </option>
+
+            <option value="sol-solana">
+              SOL — Solana
+            </option>
+
+            <option value="eth-linea">
+              ETH — Linea Mainnet
+            </option>
+
+            <option value="eth-base">
+              ETH — Base
+            </option>
+
+            <option value="eth-arbitrum">
+              ETH — Arbitrum One
+            </option>
+
+            <option value="bnb-bsc">
+              BNB — BNB Smart Chain
+            </option>
+
+            <option value="eth-op">
+              ETH — OP Mainnet
+            </option>
+
+            <option value="pol-polygon">
+              POL — Polygon PoS
+            </option>
+
+            <option value="mon-monad">
+              MON — Monad Mainnet
+            </option>
+
+            <option value="usdc-arc">
+              USDC — Arc
+            </option>
+
+          </select>
+
+        </div>
+
+        <div
+          id="payment-details"
+          class="payment-details"
+          hidden
+        >
+
+          <h3 id="payment-asset"></h3>
+
+          <p id="payment-network"></p>
+
+          <div class="qr-container">
+
+            <img
+              id="payment-qr"
+              src=""
+              alt="Payment QR code"
+            >
+
+          </div>
+
+          <p id="payment-address-label">
+            Payment address
+          </p>
+
+          <code id="payment-address"></code>
+
+          <p
+            id="payment-warning"
+            class="payment-warning"
+          >
+            Always verify the cryptocurrency and network before sending funds.
+          </p>
+
+        </div>
+
+      </section>
 
     </section>
 
