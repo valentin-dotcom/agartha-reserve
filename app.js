@@ -501,70 +501,70 @@ const paymentMethods = {
     asset: "ETH",
     network: "Ethereum Mainnet",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Ethereum.gif"
+    qr: "Ethereum.gif"
   },
 
   "sol-solana": {
     asset: "SOL",
     network: "Solana",
     address: "5uREoLWabTasKsHS1TYHsR57nKgKCgw8LSNbf3KZrZSJ",
-    qr: "qr/Solana.gif"
+    qr: "Solana.gif"
   },
 
   "eth-linea": {
     asset: "ETH",
     network: "Linea Mainnet",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Linea.gif"
+    qr: "Linea.gif"
   },
 
   "eth-base": {
     asset: "ETH",
     network: "Base",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Base.gif"
+    qr: "Base.gif"
   },
 
   "eth-arbitrum": {
     asset: "ETH",
     network: "Arbitrum One",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Arbitrum.gif"
+    qr: "Arbitrum.gif"
   },
 
   "bnb-bsc": {
     asset: "BNB",
     network: "BNB Smart Chain",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/BNB-Chain.gif"
+    qr: "BNB Chain.gif"
   },
 
   "eth-op": {
     asset: "ETH",
     network: "OP Mainnet",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/OP.gif"
+    qr: "OP.gif"
   },
 
   "pol-polygon": {
     asset: "POL",
     network: "Polygon PoS",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Polygon.gif"
+    qr: "Polygon.gif"
   },
 
   "mon-monad": {
     asset: "MON",
     network: "Monad Mainnet",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Monad.gif"
+    qr: "Monad.gif"
   },
 
   "usdc-arc": {
     asset: "USDC",
     network: "Arc",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
-    qr: "qr/Arc.gif"
+    qr: "Arc.gif"
   }
 };
 
