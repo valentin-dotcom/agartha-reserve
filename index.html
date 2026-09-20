@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Reserve My Spot | Agartha</title>
+
+  <meta
+    name="description"
+    content="Create your Agartha account and reserve your future place in the Agartha Metaverse."
+  >
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <main class="page">
+
+    <section class="hero">
+      <div class="brand">AGARTHA</div>
+
+      <h1>RESERVE MY SPOT</h1>
+
+      <p class="subtitle">
+        Create your Agartha account and begin your journey
+        into a medieval-futuristic world.
+      </p>
+    </section>
+
+    <section class="card">
+
+      <h2>Create Your Agartha Account</h2>
+
+      <p class="intro">
+        Register your account to begin the reservation process.
+      </p>
+
+      <form id="register-form">
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="first_name">First Name</label>
+            <input
+              id="first_name"
+              name="first_name"
+              type="text"
+              autocomplete="given-name"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="last_name">Last Name</label>
+            <input
+              id="last_name"
+              name="last_name"
+              type="text"
+              autocomplete="family-name"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              minlength="3"
+              maxlength="30"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="country">Country of Residence</label>
+            <input
+              id="country"
+              name="country"
+              type="text"
+              autocomplete="country-name"
+              required
+            >
+          </div>
+
+          <div class="field full">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="confirm_password">Confirm Password</label>
+            <input
+              id="confirm_password"
+              name="confirm_password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+          </div>
+
+        </div>
+
+        <div class="agreement">
+          <label class="checkbox-row">
+            <input
+              id="terms"
+              type="checkbox"
+              required
+            >
+
+            <span>
+              I agree to the Agartha Terms of Use and Privacy Policy.
+            </span>
+          </label>
+        </div>
+
+        <button
+          id="register-button"
+          type="submit"
+        >
+          CREATE ACCOUNT
+        </button>
+
+        <p
+          id="message"
+          class="message"
+          aria-live="polite"
+        ></p>
+
+      </form>
+
+    </section>
+
+    <footer>
+      <p>© Agartha Metaverse. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
