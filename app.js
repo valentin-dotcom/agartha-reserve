@@ -681,7 +681,7 @@ function updatePaymentDetails() {
     method.network;
 
   paymentQr.src =
-    method.qr;
+    `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
 
   paymentQr.alt =
     `${method.asset} payment QR code`;
