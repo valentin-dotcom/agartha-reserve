@@ -500,71 +500,71 @@ const paymentMethods = {
   "eth-ethereum": {
     asset: "ETH",
     network: "Ethereum Mainnet",
-    address: "ADD_ETHEREUM_ADDRESS",
-    qr: "qr/eth-ethereum.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Ethereum.gif"
   },
 
   "sol-solana": {
     asset: "SOL",
     network: "Solana",
-    address: "ADD_SOLANA_ADDRESS",
-    qr: "qr/sol-solana.png"
+    address: "5uREoLWabTasKsHS1TYHsR57nKgKCgw8LSNbf3KZrZSJ",
+    qr: "qr/Solana.gif"
   },
 
   "eth-linea": {
     asset: "ETH",
     network: "Linea Mainnet",
-    address: "ADD_LINEA_ADDRESS",
-    qr: "qr/eth-linea.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Linea.gif"
   },
 
   "eth-base": {
     asset: "ETH",
     network: "Base",
-    address: "ADD_BASE_ADDRESS",
-    qr: "qr/eth-base.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Base.gif"
   },
 
   "eth-arbitrum": {
     asset: "ETH",
     network: "Arbitrum One",
-    address: "ADD_ARBITRUM_ADDRESS",
-    qr: "qr/eth-arbitrum.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Arbitrum.gif"
   },
 
   "bnb-bsc": {
     asset: "BNB",
     network: "BNB Smart Chain",
-    address: "ADD_BNB_ADDRESS",
-    qr: "qr/bnb-bsc.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/BNB-Chain.gif"
   },
 
   "eth-op": {
     asset: "ETH",
     network: "OP Mainnet",
-    address: "ADD_OP_ADDRESS",
-    qr: "qr/eth-op.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/OP.gif"
   },
 
   "pol-polygon": {
     asset: "POL",
     network: "Polygon PoS",
-    address: "ADD_POLYGON_ADDRESS",
-    qr: "qr/pol-polygon.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Polygon.gif"
   },
 
   "mon-monad": {
     asset: "MON",
     network: "Monad Mainnet",
-    address: "ADD_MONAD_ADDRESS",
-    qr: "qr/mon-monad.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Monad.gif"
   },
 
   "usdc-arc": {
     asset: "USDC",
     network: "Arc",
-    address: "ADD_ARC_USDC_ADDRESS",
-    qr: "qr/usdc-arc.png"
+    address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
+    qr: "qr/Arc.gif"
   }
 };
 
@@ -652,13 +652,11 @@ function translatePage(language) {
   paymentAddressLabel.textContent =
     t.paymentAddress;
 
+   paymentAddressLabel.textContent =
+    t.paymentAddress;
+
   paymentWarning.textContent =
     t.paymentWarning;
-
-  localStorage.setItem(
-    "agartha-language",
-    language
-  );
 }
 
 
@@ -854,3 +852,675 @@ form.addEventListener("submit", async (event) => {
   }
 
 });
+
+/* =========================================================
+   LOGIN + SESSION MANAGEMENT
+========================================================= */
+
+const loginForm = document.getElementById("login-form");
+const loginButton = document.getElementById("login-button");
+const loginMessage = document.getElementById("login-message");
+const loginPanel = document.getElementById("login-panel");
+
+const registerTitle = document.querySelector(".card > h2");
+const registerIntro = document.querySelector(".card > .intro");
+
+let handledUserId = null;
+let signOutButton = null;
+
+
+/* =========================================================
+   LOGIN TRANSLATIONS
+========================================================= */
+
+const loginTranslations = {
+
+  en: {
+    loginTitle: "Already Have an Agartha Account?",
+    loginIntro: "Sign in to continue to your reservation.",
+    email: "Email Address",
+    password: "Password",
+    signIn: "SIGN IN",
+    signedIn: "Signed in successfully.",
+    reservationReady: "Your Agartha reservation area is ready.",
+    signOut: "SIGN OUT",
+    loginError: "Unable to sign in. Please check your credentials.",
+    emailNotConfirmed:
+      "Please confirm your email address before signing in."
+  },
+
+  es: {
+    loginTitle: "¿Ya Tenés una Cuenta de Agartha?",
+    loginIntro: "Iniciá sesión para continuar con tu reserva.",
+    email: "Correo electrónico",
+    password: "Contraseña",
+    signIn: "INICIAR SESIÓN",
+    signedIn: "Sesión iniciada correctamente.",
+    reservationReady: "Tu área de reserva de Agartha está lista.",
+    signOut: "CERRAR SESIÓN",
+    loginError:
+      "No se pudo iniciar sesión. Verificá tus credenciales.",
+    emailNotConfirmed:
+      "Confirmá tu correo electrónico antes de iniciar sesión."
+  },
+
+  pt: {
+    loginTitle: "Já Possui uma Conta Agartha?",
+    loginIntro: "Entre para continuar com sua reserva.",
+    email: "Endereço de e-mail",
+    password: "Senha",
+    signIn: "ENTRAR",
+    signedIn: "Login realizado com sucesso.",
+    reservationReady: "Sua área de reserva da Agartha está pronta.",
+    signOut: "SAIR",
+    loginError:
+      "Não foi possível entrar. Verifique suas credenciais.",
+    emailNotConfirmed:
+      "Confirme seu e-mail antes de entrar."
+  },
+
+  fr: {
+    loginTitle: "Vous Avez Déjà un Compte Agartha ?",
+    loginIntro:
+      "Connectez-vous pour continuer votre réservation.",
+    email: "Adresse e-mail",
+    password: "Mot de passe",
+    signIn: "SE CONNECTER",
+    signedIn: "Connexion réussie.",
+    reservationReady:
+      "Votre espace de réservation Agartha est prêt.",
+    signOut: "SE DÉCONNECTER",
+    loginError:
+      "Impossible de se connecter. Vérifiez vos identifiants.",
+    emailNotConfirmed:
+      "Veuillez confirmer votre adresse e-mail avant de vous connecter."
+  },
+
+  de: {
+    loginTitle: "Du hast bereits ein Agartha-Konto?",
+    loginIntro:
+      "Melde dich an, um mit deiner Reservierung fortzufahren.",
+    email: "E-Mail-Adresse",
+    password: "Passwort",
+    signIn: "ANMELDEN",
+    signedIn: "Erfolgreich angemeldet.",
+    reservationReady:
+      "Dein Agartha-Reservierungsbereich ist bereit.",
+    signOut: "ABMELDEN",
+    loginError:
+      "Anmeldung nicht möglich. Bitte überprüfe deine Daten.",
+    emailNotConfirmed:
+      "Bitte bestätige zuerst deine E-Mail-Adresse."
+  },
+
+  it: {
+    loginTitle: "Hai Già un Account Agartha?",
+    loginIntro:
+      "Accedi per continuare con la tua prenotazione.",
+    email: "Indirizzo e-mail",
+    password: "Password",
+    signIn: "ACCEDI",
+    signedIn: "Accesso effettuato con successo.",
+    reservationReady:
+      "La tua area di prenotazione Agartha è pronta.",
+    signOut: "ESCI",
+    loginError:
+      "Impossibile accedere. Verifica le credenziali.",
+    emailNotConfirmed:
+      "Conferma il tuo indirizzo e-mail prima di accedere."
+  },
+
+  zh: {
+    loginTitle: "已经拥有 Agartha 账户？",
+    loginIntro: "登录以继续您的预订。",
+    email: "电子邮箱",
+    password: "密码",
+    signIn: "登录",
+    signedIn: "登录成功。",
+    reservationReady: "您的 Agartha 预订区域已准备就绪。",
+    signOut: "退出登录",
+    loginError: "无法登录。请检查您的登录信息。",
+    emailNotConfirmed: "请先确认您的电子邮箱地址。"
+  },
+
+  ja: {
+    loginTitle: "すでにAgarthaアカウントをお持ちですか？",
+    loginIntro: "ログインして予約を続行してください。",
+    email: "メールアドレス",
+    password: "パスワード",
+    signIn: "ログイン",
+    signedIn: "ログインしました。",
+    reservationReady:
+      "Agarthaの予約エリアをご利用いただけます。",
+    signOut: "ログアウト",
+    loginError:
+      "ログインできません。認証情報を確認してください。",
+    emailNotConfirmed:
+      "ログインする前にメールアドレスを確認してください。"
+  },
+
+  ko: {
+    loginTitle: "이미 Agartha 계정이 있으신가요?",
+    loginIntro: "로그인하여 예약을 계속하세요.",
+    email: "이메일 주소",
+    password: "비밀번호",
+    signIn: "로그인",
+    signedIn: "로그인되었습니다.",
+    reservationReady:
+      "Agartha 예약 영역을 사용할 수 있습니다.",
+    signOut: "로그아웃",
+    loginError:
+      "로그인할 수 없습니다. 자격 증명을 확인하세요.",
+    emailNotConfirmed:
+      "로그인하기 전에 이메일 주소를 확인하세요."
+  },
+
+  ar: {
+    loginTitle: "هل لديك حساب Agartha بالفعل؟",
+    loginIntro: "سجّل الدخول للمتابعة إلى الحجز.",
+    email: "البريد الإلكتروني",
+    password: "كلمة المرور",
+    signIn: "تسجيل الدخول",
+    signedIn: "تم تسجيل الدخول بنجاح.",
+    reservationReady:
+      "منطقة حجز Agartha الخاصة بك جاهزة.",
+    signOut: "تسجيل الخروج",
+    loginError:
+      "تعذر تسجيل الدخول. تحقق من بياناتك.",
+    emailNotConfirmed:
+      "يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول."
+  },
+
+  ru: {
+    loginTitle: "Уже есть аккаунт Agartha?",
+    loginIntro: "Войдите, чтобы продолжить бронирование.",
+    email: "Электронная почта",
+    password: "Пароль",
+    signIn: "ВОЙТИ",
+    signedIn: "Вход выполнен успешно.",
+    reservationReady:
+      "Раздел бронирования Agartha готов.",
+    signOut: "ВЫЙТИ",
+    loginError:
+      "Не удалось войти. Проверьте свои данные.",
+    emailNotConfirmed:
+      "Подтвердите электронную почту перед входом."
+  }
+};
+
+
+/* =========================================================
+   LOGIN LANGUAGE
+========================================================= */
+
+function getCurrentLanguage() {
+
+  const current =
+    document.documentElement.lang || "en";
+
+  return loginTranslations[current]
+    ? current
+    : "en";
+}
+
+
+function translateLogin() {
+
+  const language = getCurrentLanguage();
+  const t = loginTranslations[language];
+
+  if (!t) {
+    return;
+  }
+
+  const title =
+    document.getElementById("login-title");
+
+  const intro =
+    document.getElementById("login-intro");
+
+  const labels =
+    loginForm?.querySelectorAll("label");
+
+  if (title) {
+    title.textContent = t.loginTitle;
+  }
+
+  if (intro) {
+    intro.textContent = t.loginIntro;
+  }
+
+  if (labels?.[0]) {
+    labels[0].textContent = t.email;
+  }
+
+  if (labels?.[1]) {
+    labels[1].textContent = t.password;
+  }
+
+  if (loginButton) {
+    loginButton.textContent = t.signIn;
+  }
+
+  if (signOutButton) {
+    signOutButton.textContent = t.signOut;
+  }
+}
+
+
+/* =========================================================
+   SIGN OUT BUTTON
+========================================================= */
+
+function createSignOutButton() {
+
+  if (signOutButton) {
+    return;
+  }
+
+  signOutButton =
+    document.createElement("button");
+
+  signOutButton.id =
+    "signout-button";
+
+  signOutButton.type =
+    "button";
+
+  signOutButton.textContent =
+    "SIGN OUT";
+
+  signOutButton.addEventListener(
+    "click",
+    async () => {
+
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+      if (error) {
+        console.error(error);
+      }
+    }
+  );
+
+  reservationPanel.appendChild(
+    signOutButton
+  );
+
+  translateLogin();
+}
+
+
+/* =========================================================
+   CREATE / LOAD RESERVATION
+========================================================= */
+
+async function loadOrCreateReservation(user) {
+
+  if (!user) {
+    return null;
+  }
+
+  const activeStatuses = [
+    "pending",
+    "payment_submitted",
+    "payment_verified",
+    "confirmed"
+  ];
+
+  const { data: existingReservation, error: findError } =
+    await supabaseClient
+      .from("reservations")
+      .select(`
+        id,
+        reservation_code,
+        status,
+        amount_usd,
+        crypto_asset,
+        network,
+        payment_address,
+        transaction_hash,
+        created_at
+      `)
+      .eq("user_id", user.id)
+      .in("status", activeStatuses)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+  if (findError) {
+    throw findError;
+  }
+
+  if (existingReservation) {
+    return existingReservation;
+  }
+
+  const { data: newReservation, error: insertError } =
+    await supabaseClient
+      .from("reservations")
+      .insert({
+        user_id: user.id
+      })
+      .select(`
+        id,
+        reservation_code,
+        status,
+        amount_usd,
+        crypto_asset,
+        network,
+        payment_address,
+        transaction_hash,
+        created_at
+      `)
+      .single();
+
+  if (insertError) {
+    throw insertError;
+  }
+
+  return newReservation;
+}
+
+
+/* =========================================================
+   RESERVATION DISPLAY
+========================================================= */
+
+function showReservationCode(reservation) {
+
+  if (!reservation) {
+    return;
+  }
+
+  let codeElement =
+    document.getElementById(
+      "reservation-code-display"
+    );
+
+  if (!codeElement) {
+
+    codeElement =
+      document.createElement("p");
+
+    codeElement.id =
+      "reservation-code-display";
+
+    codeElement.className =
+      "message";
+
+    reservationTitle.insertAdjacentElement(
+      "afterend",
+      codeElement
+    );
+  }
+
+  const language =
+    getCurrentLanguage();
+
+  const labels = {
+
+    en: "Reservation ID",
+    es: "ID de reserva",
+    pt: "ID da reserva",
+    fr: "ID de réservation",
+    de: "Reservierungs-ID",
+    it: "ID prenotazione",
+    zh: "预订编号",
+    ja: "予約ID",
+    ko: "예약 ID",
+    ar: "معرّف الحجز",
+    ru: "ID бронирования"
+  };
+
+  codeElement.textContent =
+    `${labels[language] || labels.en}: ${reservation.reservation_code}`;
+}
+
+
+/* =========================================================
+   AUTHENTICATED UI
+========================================================= */
+
+async function showAuthenticatedState(session) {
+
+  if (!session?.user) {
+    return;
+  }
+
+  if (handledUserId === session.user.id) {
+    return;
+  }
+
+  handledUserId = session.user.id;
+
+  try {
+
+    const reservation =
+      await loadOrCreateReservation(
+        session.user
+      );
+
+    if (form) {
+      form.hidden = true;
+    }
+
+    if (registerTitle) {
+      registerTitle.hidden = true;
+    }
+
+    if (registerIntro) {
+      registerIntro.hidden = true;
+    }
+
+    if (loginPanel) {
+      loginPanel.hidden = true;
+    }
+
+    reservationPanel.hidden = false;
+
+    showReservationCode(
+      reservation
+    );
+
+    createSignOutButton();
+
+    const language =
+      getCurrentLanguage();
+
+    const t =
+      loginTranslations[language]
+      || loginTranslations.en;
+
+    reservationIntro.textContent =
+      t.reservationReady;
+
+    translateLogin();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    handledUserId = null;
+
+    if (loginMessage) {
+      loginMessage.textContent =
+        error?.message ||
+        "Unable to prepare your reservation.";
+    }
+  }
+}
+
+
+/* =========================================================
+   SIGNED OUT UI
+========================================================= */
+
+function showSignedOutState() {
+
+  handledUserId = null;
+
+  if (form) {
+    form.hidden = false;
+  }
+
+  if (registerTitle) {
+    registerTitle.hidden = false;
+  }
+
+  if (registerIntro) {
+    registerIntro.hidden = false;
+  }
+
+  if (loginPanel) {
+    loginPanel.hidden = false;
+  }
+
+  reservationPanel.hidden = true;
+
+  if (loginMessage) {
+    loginMessage.textContent = "";
+  }
+
+  if (signOutButton) {
+    signOutButton.remove();
+    signOutButton = null;
+  }
+
+  translateLogin();
+}
+
+
+/* =========================================================
+   LOGIN SUBMIT
+========================================================= */
+
+if (loginForm) {
+
+  loginForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+      loginMessage.textContent = "";
+      loginButton.disabled = true;
+
+      const email =
+        document
+          .getElementById("login-email")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("login-password")
+          .value;
+
+      try {
+
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) {
+          throw error;
+        }
+
+        const user =
+          data?.user;
+
+        if (!user) {
+          throw new Error(
+            "No authenticated user was returned."
+          );
+        }
+
+        const session =
+          data?.session;
+
+        if (session) {
+          await showAuthenticatedState(
+            session
+          );
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        const language =
+          getCurrentLanguage();
+
+        const t =
+          loginTranslations[language]
+          || loginTranslations.en;
+
+        if (
+          error?.message
+            ?.toLowerCase()
+            .includes("email not confirmed")
+        ) {
+
+          loginMessage.textContent =
+            t.emailNotConfirmed;
+
+        } else {
+
+          loginMessage.textContent =
+            t.loginError;
+        }
+
+      } finally {
+
+        loginButton.disabled = false;
+
+      }
+    }
+  );
+}
+
+
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  (event, session) => {
+
+    window.setTimeout(
+      () => {
+
+        if (session) {
+
+          showAuthenticatedState(
+            session
+          );
+
+        } else {
+
+          showSignedOutState();
+
+        }
+
+      },
+      0
+    );
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL LOGIN LANGUAGE
+========================================================= */
+
+translateLogin();
+
