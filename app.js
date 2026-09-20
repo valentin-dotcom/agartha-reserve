@@ -492,7 +492,7 @@ const translations = {
 
 /* =========================================================
    PAYMENT METHODS
-   QR paths are ready, but real addresses are added later.
+   QR paths and public payment addresses
 ========================================================= */
 
 const paymentMethods = {
@@ -648,11 +648,7 @@ function translatePage(language) {
     firstOption.textContent =
       t.selectPayment;
   }
-
   paymentAddressLabel.textContent =
-    t.paymentAddress;
-
-   paymentAddressLabel.textContent =
     t.paymentAddress;
 
   paymentWarning.textContent =
@@ -714,7 +710,12 @@ const initialLanguage =
       );
 
 languageSelect.value =
-  savedLanguage || "auto";
+  (
+    savedLanguage === "auto" ||
+    translations[savedLanguage]
+  )
+    ? savedLanguage
+    : "auto";
 
 translatePage(initialLanguage);
 
@@ -731,6 +732,23 @@ languageSelect.addEventListener(
         : selected;
 
     translatePage(language);
+
+    localStorage.setItem(
+      "agartha-language",
+      selected
+    );
+
+    translateLogin();
+
+    if (!reservationPanel.hidden) {
+
+      const tLogin =
+        loginTranslations[language]
+        || loginTranslations.en;
+
+      reservationIntro.textContent =
+        tLogin.reservationReady;
+    }
   }
 );
 
