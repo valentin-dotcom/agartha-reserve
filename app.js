@@ -974,10 +974,6 @@ async function verifyPayment() {
 
   }
 }
-
-verifyPaymentButton.addEventListener(
-  "click",
-  verifyPayment
 );
 
 /* =========================================================
@@ -1767,3 +1763,15 @@ supabaseClient.auth.onAuthStateChange(
 
 translateLogin();
 
+/* =========================================================
+   VERIFY PAYMENT BUTTON
+========================================================= */
+
+if (verifyPaymentButton) {
+
+  verifyPaymentButton.addEventListener(
+    "click",
+    verifyPayment
+  );
+
+}
