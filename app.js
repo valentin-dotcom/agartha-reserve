@@ -34,6 +34,9 @@ const paymentAsset =
 const paymentNetwork =
   document.getElementById("payment-network");
 
+const paymentPrice =
+  document.getElementById("payment-price");
+
 const paymentQr =
   document.getElementById("payment-qr");
 
