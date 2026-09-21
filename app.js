@@ -974,7 +974,6 @@ async function verifyPayment() {
 
   }
 }
-);
 
 /* =========================================================
    REGISTRATION
