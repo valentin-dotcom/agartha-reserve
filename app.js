@@ -702,6 +702,8 @@ async function updatePaymentDetails() {
   paymentAmount.textContent =
     `Amount to pay: Calculating...`;
 
+  console.log("PAYMENT TEST:", method.priceId);
+  
   paymentQr.src =
     `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
 
