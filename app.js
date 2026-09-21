@@ -8,7 +8,7 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
-
+const RESERVATION_PRICE_USD = 500;
 /* =========================================================
    ELEMENTS
 ========================================================= */
@@ -1218,7 +1218,8 @@ async function loadOrCreateReservation(user) {
     await supabaseClient
       .from("reservations")
       .insert({
-        user_id: user.id
+        user_id: user.id,
+        amount_usd: RESERVATION_PRICE_USD
       })
       .select(`
         id,
