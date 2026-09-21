@@ -348,7 +348,42 @@
           >
             Always verify the cryptocurrency and network before sending funds.
           </p>
+<div
+  id="payment-submission"
+  class="payment-submission"
+>
 
+  <h3>Confirm Your Payment</h3>
+
+  <p>
+    After sending the funds, enter the transaction ID (TXID) below.
+  </p>
+
+  <label for="transaction-hash">
+    Transaction ID (TXID)
+  </label>
+
+  <input
+    type="text"
+    id="transaction-hash"
+    placeholder="Paste your TXID here"
+    autocomplete="off"
+  >
+
+  <button
+    type="button"
+    id="verify-payment-button"
+  >
+    VERIFY PAYMENT
+  </button>
+
+  <p
+    id="payment-status"
+    class="message"
+    aria-live="polite"
+  ></p>
+
+</div>
         </div>
 
       </section>
