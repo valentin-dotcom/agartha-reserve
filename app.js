@@ -912,7 +912,7 @@ async function verifyPayment() {
 
     const { data, error } =
       await supabaseClient.functions.invoke(
-        "verify-payment",
+       "clever-endpoint",
         {
           body: {
             reservation_code:
