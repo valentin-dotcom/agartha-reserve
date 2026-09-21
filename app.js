@@ -37,6 +37,9 @@ const paymentNetwork =
 const paymentPrice =
   document.getElementById("payment-price");
 
+const paymentAmount =
+  document.getElementById("payment-amount");
+
 const paymentQr =
   document.getElementById("payment-qr");
 
@@ -685,6 +688,9 @@ function updatePaymentDetails() {
 
   paymentPrice.textContent =
   `Reservation price: US$${RESERVATION_PRICE_USD} USD`;
+  
+  paymentAmount.textContent =
+  `Amount to pay: Calculating...`;
   
   paymentQr.src =
     `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
