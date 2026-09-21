@@ -684,6 +684,18 @@ async function updatePaymentDetails() {
   if (!selected || !paymentMethods[selected]) {
 
     paymentDetails.hidden = true;
+    currentPaymentQuote = null;
+    return;
+  }
+
+  if (!currentReservation) {
+
+    paymentDetails.hidden = true;
+
+    console.error(
+      "No active reservation found."
+    );
+
     return;
   }
 
@@ -701,7 +713,7 @@ async function updatePaymentDetails() {
 
   paymentAmount.textContent =
     `Amount to pay: Calculating...`;
-  
+
   paymentQr.src =
     `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
 
@@ -717,10 +729,14 @@ async function updatePaymentDetails() {
 
     const { data, error } =
       await supabaseClient.functions.invoke(
-        "get-crypto-price",
+        "create-payment-quote",
         {
           body: {
-            asset: method.priceId
+            reservation_code:
+              currentReservation.reservation_code,
+
+            method_id:
+              selected
           }
         }
       );
@@ -729,15 +745,31 @@ async function updatePaymentDetails() {
       throw error;
     }
 
-    const price =
-      Number(data?.price_usd);
+    const quote =
+      data?.quote;
 
-    if (!Number.isFinite(price) || price <= 0) {
-      throw new Error("Invalid cryptocurrency price");
+    if (!quote) {
+      throw new Error(
+        "No payment quote was returned."
+      );
     }
 
     const cryptoAmount =
-      RESERVATION_PRICE_USD / price;
+      Number(
+        quote.crypto_amount
+      );
+
+    if (
+      !Number.isFinite(cryptoAmount) ||
+      cryptoAmount <= 0
+    ) {
+      throw new Error(
+        "Invalid payment amount."
+      );
+    }
+
+    currentPaymentQuote =
+      quote;
 
     paymentAmount.textContent =
       `Amount to pay: ${cryptoAmount.toFixed(8)} ${method.asset}`;
@@ -745,9 +777,11 @@ async function updatePaymentDetails() {
   } catch (error) {
 
     console.error(
-      "Crypto price error:",
+      "Payment quote error:",
       error
     );
+
+    currentPaymentQuote = null;
 
     paymentAmount.textContent =
       "Amount to pay: Unable to calculate";
@@ -948,6 +982,8 @@ const registerIntro = document.querySelector(".card > .intro");
 
 let handledUserId = null;
 let signOutButton = null;
+let currentReservation = null;
+let currentPaymentQuote = null;
 
 
 /* =========================================================
@@ -1383,6 +1419,9 @@ async function showAuthenticatedState(session) {
         session.user
       );
 
+    currentReservation = reservation;
+    currentPaymentQuote = null;
+    
     if (form) {
       form.hidden = true;
     }
@@ -1446,6 +1485,8 @@ async function showAuthenticatedState(session) {
 function showSignedOutState() {
 
   handledUserId = null;
+  currentReservation = null;
+  currentPaymentQuote = null;
 
   if (form) {
     form.hidden = false;
