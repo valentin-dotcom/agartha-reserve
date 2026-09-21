@@ -1761,16 +1761,3 @@ supabaseClient.auth.onAuthStateChange(
 ========================================================= */
 
 translateLogin();
-
-/* =========================================================
-   VERIFY PAYMENT BUTTON
-========================================================= */
-
-if (verifyPaymentButton) {
-
-  verifyPaymentButton.addEventListener(
-    "click",
-    verifyPayment
-  );
-
-}
