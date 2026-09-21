@@ -52,6 +52,15 @@ const paymentAddressLabel =
 const paymentWarning =
   document.getElementById("payment-warning");
 
+const transactionHashInput =
+  document.getElementById("transaction-hash");
+
+const verifyPaymentButton =
+  document.getElementById("verify-payment-button");
+
+const paymentStatus =
+  document.getElementById("payment-status");
+
 const reservationTitle =
   document.getElementById("reservation-title");
 
@@ -859,6 +868,117 @@ cryptoSelect.addEventListener(
   updatePaymentDetails
 );
 
+/* =========================================================
+   VERIFY PAYMENT
+========================================================= */
+
+async function verifyPayment() {
+
+  if (!currentReservation) {
+
+    paymentStatus.textContent =
+      "No active reservation found.";
+
+    return;
+  }
+
+  if (!currentPaymentQuote) {
+
+    paymentStatus.textContent =
+      "Please select a payment method again to create a valid payment quote.";
+
+    return;
+  }
+
+  const txid =
+    transactionHashInput.value.trim();
+
+  if (!txid) {
+
+    paymentStatus.textContent =
+      "Please enter your transaction ID (TXID).";
+
+    transactionHashInput.focus();
+
+    return;
+  }
+
+  verifyPaymentButton.disabled = true;
+
+  paymentStatus.textContent =
+    "Verifying your payment on the blockchain...";
+
+  try {
+
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "verify-payment",
+        {
+          body: {
+            reservation_code:
+              currentReservation.reservation_code,
+
+            quote_id:
+              currentPaymentQuote.id,
+
+            txid:
+              txid
+          }
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data) {
+      throw new Error(
+        "No verification response was received."
+      );
+    }
+
+    if (data.verified) {
+
+      paymentStatus.textContent =
+        "Payment verified successfully.";
+
+      verifyPaymentButton.disabled = true;
+
+      return;
+    }
+
+    paymentStatus.textContent =
+      data.message ||
+      "Payment could not be verified.";
+
+  } catch (error) {
+
+    console.error(
+      "Payment verification error:",
+      error
+    );
+
+    paymentStatus.textContent =
+      error?.message ||
+      "Unable to verify the payment.";
+
+  } finally {
+
+    if (
+      !paymentStatus.textContent
+        .toLowerCase()
+        .includes("successfully")
+    ) {
+      verifyPaymentButton.disabled = false;
+    }
+
+  }
+}
+
+verifyPaymentButton.addEventListener(
+  "click",
+  verifyPayment
+);
 
 /* =========================================================
    REGISTRATION
