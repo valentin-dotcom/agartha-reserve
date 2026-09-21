@@ -683,6 +683,9 @@ function updatePaymentDetails() {
   paymentNetwork.textContent =
     method.network;
 
+  paymentPrice.textContent =
+  `Reservation price: US$${RESERVATION_PRICE_USD} USD`;
+  
   paymentQr.src =
     `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
 
