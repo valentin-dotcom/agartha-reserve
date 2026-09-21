@@ -506,6 +506,7 @@ const paymentMethods = {
   "eth-ethereum": {
     asset: "ETH",
     network: "Ethereum Mainnet",
+    priceId: "ethereum",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Ethereum.gif"
   },
@@ -513,6 +514,7 @@ const paymentMethods = {
   "sol-solana": {
     asset: "SOL",
     network: "Solana",
+    priceId: "solana",
     address: "5uREoLWabTasKsHS1TYHsR57nKgKCgw8LSNbf3KZrZSJ",
     qr: "Solana.gif"
   },
@@ -520,6 +522,7 @@ const paymentMethods = {
   "eth-linea": {
     asset: "ETH",
     network: "Linea Mainnet",
+    priceId: "ethereum",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Linea.gif"
   },
@@ -527,6 +530,7 @@ const paymentMethods = {
   "eth-base": {
     asset: "ETH",
     network: "Base",
+    priceId: "ethereum",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Base.gif"
   },
@@ -534,6 +538,7 @@ const paymentMethods = {
   "eth-arbitrum": {
     asset: "ETH",
     network: "Arbitrum One",
+    priceId: "ethereum",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Arbitrum.gif"
   },
@@ -541,6 +546,7 @@ const paymentMethods = {
   "bnb-bsc": {
     asset: "BNB",
     network: "BNB Smart Chain",
+    priceId: "binancecoin",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "BNB Chain.gif"
   },
@@ -548,6 +554,7 @@ const paymentMethods = {
   "eth-op": {
     asset: "ETH",
     network: "OP Mainnet",
+    priceId: "ethereum",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "OP.gif"
   },
@@ -555,6 +562,7 @@ const paymentMethods = {
   "pol-polygon": {
     asset: "POL",
     network: "Polygon PoS",
+    priceId: "polygon-ecosystem-token",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Polygon.gif"
   },
@@ -562,6 +570,7 @@ const paymentMethods = {
   "mon-monad": {
     asset: "MON",
     network: "Monad Mainnet",
+    priceId: "monad",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Monad.gif"
   },
@@ -569,6 +578,7 @@ const paymentMethods = {
   "usdc-arc": {
     asset: "USDC",
     network: "Arc",
+    priceId: "usd-coin",
     address: "0x97F507eCBEa0eFBb36f0DeA1FB8D16A72a86f5b1",
     qr: "Arc.gif"
   }
@@ -666,7 +676,7 @@ function translatePage(language) {
    PAYMENT SELECTOR
 ========================================================= */
 
-function updatePaymentDetails() {
+async function updatePaymentDetails() {
 
   const selected =
     cryptoSelect.value;
@@ -687,11 +697,11 @@ function updatePaymentDetails() {
     method.network;
 
   paymentPrice.textContent =
-  `Reservation price: US$${RESERVATION_PRICE_USD} USD`;
-  
+    `Reservation price: US$${RESERVATION_PRICE_USD} USD`;
+
   paymentAmount.textContent =
-  `Amount to pay: Calculating...`;
-  
+    `Amount to pay: Calculating...`;
+
   paymentQr.src =
     `https://valentin-dotcom.github.io/agartha-reserve/${encodeURIComponent(method.qr)}`;
 
@@ -702,6 +712,47 @@ function updatePaymentDetails() {
     method.address;
 
   paymentDetails.hidden = false;
+
+  try {
+
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "get-crypto-price",
+        {
+          body: {
+            asset: method.priceId
+          }
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    const price =
+      Number(data?.price_usd);
+
+    if (!Number.isFinite(price) || price <= 0) {
+      throw new Error("Invalid cryptocurrency price");
+    }
+
+    const cryptoAmount =
+      RESERVATION_PRICE_USD / price;
+
+    paymentAmount.textContent =
+      `Amount to pay: ${cryptoAmount.toFixed(8)} ${method.asset}`;
+
+  } catch (error) {
+
+    console.error(
+      "Crypto price error:",
+      error
+    );
+
+    paymentAmount.textContent =
+      "Amount to pay: Unable to calculate";
+
+  }
 }
 
 
