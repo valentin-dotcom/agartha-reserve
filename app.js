@@ -1424,9 +1424,55 @@ async function loadOrCreateReservation(user) {
     throw findError;
   }
 
-  if (existingReservation) {
-    return existingReservation;
+ if (existingReservation) {
+
+  const storedAmount =
+    Number(existingReservation.amount_usd);
+
+  if (
+    existingReservation.status === "pending" &&
+    (
+      !Number.isFinite(storedAmount) ||
+      storedAmount !== RESERVATION_PRICE_USD
+    )
+  ) {
+
+    const {
+      data: normalizedReservation,
+      error: normalizeError
+    } =
+      await supabaseClient
+        .from("reservations")
+        .update({
+          amount_usd:
+            RESERVATION_PRICE_USD
+        })
+        .eq(
+          "id",
+          existingReservation.id
+        )
+        .select(`
+          id,
+          reservation_code,
+          status,
+          amount_usd,
+          crypto_asset,
+          network,
+          payment_address,
+          transaction_hash,
+          created_at
+        `)
+        .single();
+
+    if (normalizeError) {
+      throw normalizeError;
+    }
+
+    return normalizedReservation;
   }
+
+  return existingReservation;
+}
 
   const { data: newReservation, error: insertError } =
     await supabaseClient
