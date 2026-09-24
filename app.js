@@ -8,7 +8,7 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
-const RESERVATION_PRICE_USD = 500;
+const RESERVATION_PRICE_USD = 50;
 /* =========================================================
    ELEMENTS
 ========================================================= */
